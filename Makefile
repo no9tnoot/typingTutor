@@ -9,12 +9,14 @@ $(BINDIR)/%.class:$(SRCDIR)/%.java
 	
 CLASSES=WordDictionary.class \
 		FallingWord.class \
+		HungryWord.class \
 		Score.class \
 		CatchWord.class \
 		GamePanel.class \
 		ScoreUpdater.class \
 		WordMover.class \
-		TypingTutorApp.class
+		HungryWordMover.class \
+		TypingTutorApp.class \
 		
 		
 
@@ -24,6 +26,7 @@ CLASS_FILES=$(CLASSES:%.class=$(BINDIR)/%.class)
 default: $(CLASS_FILES)
 
 jar: $(CLASS_FILES)
+	cd bin
 	jar -cvfe typingTutor.jar typingTutor.TypingTutorApp $(BINDIR)/*.class
 
 clean:

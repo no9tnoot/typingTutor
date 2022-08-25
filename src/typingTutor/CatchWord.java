@@ -34,12 +34,12 @@ public class CatchWord extends Thread {
 	
 	public void run() {
 		int i=0;
-      int ymax = 0;
-      int maxIndex = 0;
-      //int lowTarget = 0;
-      //boolean found = false;
-      FallingWord[] targets = new FallingWord[noWords];
-      Integer[] tarY = new Integer[noWords];
+      	int ymax = 0;
+      	int maxIndex = 0;
+      	//int lowTarget = 0;
+      	//boolean found = false;
+      	FallingWord[] targets = new FallingWord[noWords];
+      	Integer[] tarY = new Integer[noWords];
       
 		while (i<noWords) {		
 			while(pause.get()) {};
@@ -51,6 +51,7 @@ public class CatchWord extends Thread {
                   targets[j] = words[j];
                   tarY[j] = words[j].getY();
                   }
+				else tarY[j] =0;
                }
             ymax = Collections.max(Arrays.asList(tarY));
             maxIndex = Arrays.asList(tarY).indexOf(ymax);//find highest y value corresponding to lowest word
@@ -58,18 +59,10 @@ public class CatchWord extends Thread {
 
 			System.out.println( " score! '" + target); //for checking
 			score.caughtWord(target.length());
-            //if (words[i].getY() > ymax)
-               //{
-               //ymax = words[i].getY();
-               //System.out.println( ymax);
-               //lowTarget = i;
-               //found = true;
-               //}	
 				//FallingWord.increaseSpeed();
 				break;
 			}
          i++;
 		}
-	//if (found) words[lowTarget].resetWord();
 	}	
 }
