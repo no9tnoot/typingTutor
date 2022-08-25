@@ -1,6 +1,8 @@
 package typingTutor;
 
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.Arrays;
+import java.util.Collections;
 
 //Thread to monitor the word that has been typed.
 public class CatchWord extends Thread {
@@ -32,16 +34,42 @@ public class CatchWord extends Thread {
 	
 	public void run() {
 		int i=0;
+      int ymax = 0;
+      int maxIndex = 0;
+      //int lowTarget = 0;
+      //boolean found = false;
+      FallingWord[] targets = new FallingWord[noWords];
+      Integer[] tarY = new Integer[noWords];
+      
 		while (i<noWords) {		
 			while(pause.get()) {};
 			if (words[i].matchWord(target)) {
-				System.out.println( " score! '" + target); //for checking
-				score.caughtWord(target.length());	
+            for (int j = 0; j < noWords; j++)//check all words and create array with all matches
+               {
+               if (words[j].matchWord(target))
+                  {
+                  targets[j] = words[j];
+                  tarY[j] = words[j].getY();
+                  }
+               }
+            ymax = Collections.max(Arrays.asList(tarY));
+            maxIndex = Arrays.asList(tarY).indexOf(ymax);//find highest y value corresponding to lowest word
+            targets[maxIndex].resetWord();
+
+			System.out.println( " score! '" + target); //for checking
+			score.caughtWord(target.length());
+            //if (words[i].getY() > ymax)
+               //{
+               //ymax = words[i].getY();
+               //System.out.println( ymax);
+               //lowTarget = i;
+               //found = true;
+               //}	
 				//FallingWord.increaseSpeed();
 				break;
 			}
-		   i++;
+         i++;
 		}
-		
+	//if (found) words[lowTarget].resetWord();
 	}	
 }

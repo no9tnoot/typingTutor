@@ -1,11 +1,11 @@
-JAVAC=C:\Java\jdk-16\bin\javac.exe
-#JAVAC=%JAVA_HOME%\javac.exe
+#JAVAC=C:\Java\jdk-16\bin\javac.exe
+JAVAC = javac
 .SUFFIXES: .java .class
 SRCDIR=src\typingTutor
-BINDIR=bin
+BINDIR=bin\typingTutor
 
 $(BINDIR)/%.class:$(SRCDIR)/%.java
-	$(JAVAC) -d $(BINDIR)/ -cp $(BINDIR) $<
+	$(JAVAC) -d bin/ -cp bin/ $<
 	
 CLASSES=WordDictionary.class \
 		FallingWord.class \
@@ -23,6 +23,9 @@ CLASS_FILES=$(CLASSES:%.class=$(BINDIR)/%.class)
 
 default: $(CLASS_FILES)
 
+jar: $(CLASS_FILES)
+	jar -cvfe typingTutor.jar typingTutor.TypingTutorApp $(BINDIR)/*.class
+
 clean:
-	rm $(BINDIR)/*.class
+	del $(BINDIR)\*.class
 	
