@@ -51,8 +51,20 @@ public class HungryWordMover extends Thread {
 			if (!done.get() && myWord.dropped()) {
 				score.missedWord();
 				myWord.resetWord();
+				try {
+					sleep((int) Math.random() * 3000);
+					} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					};
 			}
 			myWord.resetWord();
+			try {
+				sleep((int) Math.random() * 3000);
+				} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				};
 		}
 	}
 	

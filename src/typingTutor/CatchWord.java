@@ -45,19 +45,26 @@ public class CatchWord extends Thread {
       
 		while (i<noWords) {		
 			while(pause.get()) {};
-			if (words[i].matchWord(target)) {
+			if (words[i].matchWord(target) || hWord[0].matchWord(target)) {
             for (int j = 0; j < noWords; j++)//check all words and create array with all matches
                {
-               if (words[j].matchWord(target))
-                  {
-                  targets[j] = words[j];
-                  tarY[j] = words[j].getY();
-                  }
+                if (words[j].matchWord(target))
+                 	{
+                  	targets[j] = words[j];
+                  	tarY[j] = words[j].getY();
+                	}
 				else tarY[j] =0;
-               }
+               	}
             ymax = Collections.max(Arrays.asList(tarY));
-            maxIndex = Arrays.asList(tarY).indexOf(ymax);//find highest y value corresponding to lowest word
-            targets[maxIndex].resetWord();
+			if (hWord[0].matchWord(target) && hWord[0].getY()>ymax)
+				{
+				 hWord[0].resetWord();
+				}
+			else
+				{
+            	maxIndex = Arrays.asList(tarY).indexOf(ymax);//find highest y value corresponding to lowest word
+            	targets[maxIndex].resetWord();
+				}
 
 			System.out.println( " score! '" + target); //for checking
 			score.caughtWord(target.length());

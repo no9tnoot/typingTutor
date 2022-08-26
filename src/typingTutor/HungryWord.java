@@ -82,7 +82,7 @@ public class HungryWord {
 		setX(x);
 	}
 	public synchronized void resetPos() {
-		setX(0);
+		setX(-20);
 	}
 
 	public synchronized void resetWord() {
