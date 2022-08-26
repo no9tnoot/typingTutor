@@ -10,7 +10,8 @@ public class CatchWord extends Thread {
 	static AtomicBoolean done ; //REMOVE
 	static AtomicBoolean pause; //REMOVE
 	
-	private static  FallingWord[] words; //list of words
+	private static FallingWord[] words; //list of words
+	private static HungryWord[] hWord;
 	private static int noWords; //how many
 	private static Score score; //user score
 	
@@ -18,8 +19,9 @@ public class CatchWord extends Thread {
 		target=typedWord;
 	}
 	
-	public static void setWords(FallingWord[] wordList) {
+	public static void setWords(FallingWord[] wordList, HungryWord[] hw) {
 		words=wordList;	
+		hWord = hw;
 		noWords = words.length;
 	}
 	

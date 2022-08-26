@@ -28,8 +28,8 @@ public class TypingTutorApp {
 
 	static FallingWord[] words;
 	static WordMover[] wrdShft;
-	static HungryWord hWord;
-	static HungryWordMover hwMover;
+	static HungryWord[] hWord;
+	static HungryWordMover[] hwMover;
 	static CountDownLatch startLatch; //so threads can start at once
 	
 	static AtomicBoolean started;  
@@ -107,6 +107,7 @@ public class TypingTutorApp {
 		    	} else { //user quit last game
 		    		score.reset();
 					FallingWord.resetSpeed();
+					HungryWord.resetSpeed();
 		    		done.set(false);
 					startLatch = new CountDownLatch(1); //so threads can start at once
 					createWordMoverThreads();   	 //create new threads for next game 
@@ -196,15 +197,15 @@ public class TypingTutorApp {
 	    		wrdShft[i] = new WordMover(words[i],dict,score,startLatch,done,pause);
 	    }
 
-		hWord = new HungryWord(dict.getNewWord(),gameWindow.getStartYpos(),xLimit);
-		hwMover = new HungryWordMover(hWord,dict,score,startLatch,done,pause);
+		hWord[0] = new HungryWord(dict.getNewWord(),gameWindow.getStartYpos(),xLimit);
+		hwMover[0] = new HungryWordMover(hWord[0],dict,score,startLatch,done,pause);
 
         //word movers waiting on starting line
      	for (int i=0;i<noWords;i++) {
      		wrdShft[i] .start();
      	}
 
-		hwMover.start();
+		hwMover[0].start();
 	}
 	
 public static String[] getDictFromFile(String filename) {
@@ -250,13 +251,14 @@ public static void main(String[] args) {
 		}
 				
 		FallingWord.dict=dict; //set the class dictionary for the words.
+		HungryWord.dict=dict;
 		
 		words = new FallingWord[noWords];  //array for the  current chosen words from dict
 		wrdShft = new WordMover[noWords]; //array for the threads that animate the words
-		hWord = new HungryWord();
-		//hwMover = new HungryWordMover();
+		hWord = new HungryWord[1];
+		hwMover = new HungryWordMover[1];
 		
-		CatchWord.setWords(words);  //class setter - static method
+		CatchWord.setWords(words, hWord);  //class setter - static method
 		CatchWord.setScore(score);  //class setter - static method
 		CatchWord.setFlags(done,pause); //class setter - static method
 

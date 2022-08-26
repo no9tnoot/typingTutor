@@ -14,11 +14,11 @@ public class GamePanel extends JPanel implements Runnable {
 		private AtomicBoolean won ; //REMOVE
 
 		private FallingWord[] words;
-		private HungryWord hWord;
+		private HungryWord[] hWord;
 		private int noWords;
 		private final static int borderWidth=25; //appearance - border
 
-		GamePanel(FallingWord[] words, HungryWord hWord, int maxY,	
+		GamePanel(FallingWord[] words, HungryWord[] hWord, int maxY,	
 				 AtomicBoolean d, AtomicBoolean s, AtomicBoolean w) {
 			this.words=words; //shared word list
 			this.hWord = hWord;
@@ -48,7 +48,7 @@ public class GamePanel extends JPanel implements Runnable {
 					g.setColor(Color.black);    	
 		    		g.drawString(words[i].getWord(),words[i].getX()+borderWidth,words[i].getY());
 					g.setColor(Color.green);
-					g.drawString(hWord.getWord(), hWord.getX()+borderWidth, hWord.getY());	
+					g.drawString(hWord[0].getWord(), hWord[0].getX()+borderWidth, hWord[0].getY());	
 		    	}
 		    	g.setColor(Color.lightGray); //change colour of pen
 		    	g.fillRect(borderWidth,0,width,borderWidth);
@@ -70,7 +70,7 @@ public class GamePanel extends JPanel implements Runnable {
 		}
 
 		public int getStartYpos() {
-			int height = getHeight()-borderWidth*2;
+			int height = (getHeight()-borderWidth*2)/2;
 			//int y= (int)(Math.random() * height);
 			return height;
 		}
