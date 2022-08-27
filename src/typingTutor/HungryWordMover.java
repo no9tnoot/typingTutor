@@ -49,7 +49,7 @@ public class HungryWordMover extends Thread {
 					while(pause.get()&&!done.get()) {};
 			}
 			if (!done.get() && myWord.dropped()) {
-				score.missedWord();
+				score.missedWord(myWord.getEaten());
 				myWord.resetWord();
 				try {
 					sleep((int) Math.random() * 3000);
@@ -59,12 +59,12 @@ public class HungryWordMover extends Thread {
 					};
 			}
 			myWord.resetWord();
-			try {
-				sleep((int) Math.random() * 3000);
+			/*try {
+				//sleep((int) Math.random() * 3000);
 				} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-				};
+				};*/
 		}
 	}
 	

@@ -42,7 +42,8 @@ public class CatchWord extends Thread {
       	//boolean found = false;
       	FallingWord[] targets = new FallingWord[noWords];
       	Integer[] tarY = new Integer[noWords];
-      
+		
+
 		while (i<noWords) {		
 			while(pause.get()) {};
 			if (words[i].matchWord(target) || hWord[0].matchWord(target)) {
@@ -58,7 +59,8 @@ public class CatchWord extends Thread {
             ymax = Collections.max(Arrays.asList(tarY));
 			if (hWord[0].matchWord(target) && hWord[0].getY()>ymax)
 				{
-				 hWord[0].resetWord();
+				score.caughtWord(hWord[0].getScore());	//score of eaten words is added
+				hWord[0].resetWord();
 				}
 			else
 				{

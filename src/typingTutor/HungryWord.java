@@ -1,7 +1,10 @@
 package typingTutor;
 
+import java.awt.geom.Point2D;
+
 public class HungryWord {
 	private String word; // the word
+	private int len;
 	private int x; //position - width
 	private int y; // postion - height
 	private int maxX; //maximum height
@@ -11,6 +14,9 @@ public class HungryWord {
 	private static int maxWait=1000;
 	private static int minWait=100;
 
+	private int eaten;
+	private int score;
+
 	public static WordDictionary dict;
 	
 	HungryWord() { //constructor with defaults
@@ -19,7 +25,8 @@ public class HungryWord {
 		y=150;	
 		maxX=990;
 		dropped=false;
-		moveSpeed=(int)(Math.random() * (maxWait-minWait)+minWait); 
+		moveSpeed=(int)(Math.random() * (maxWait-minWait)+minWait);
+		len = word.length(); 
 	}
 	
 	HungryWord(String text) { 
@@ -81,12 +88,39 @@ public class HungryWord {
 		setY(y);
 		setX(x);
 	}
+
+	public synchronized int getEaten()
+		{
+		return eaten;
+		}
+
+	public synchronized int getScore()
+		{
+		return score;
+		}
+
+	public synchronized void eat(FallingWord f)
+		{
+		//System.out.println("trying to eat " + f.getWord());
+		int ydist = Math.abs(y-f.getY());
+		int xdist = Math.abs(x-f.getX());
+
+		//if (Point2D.distance(x, y, f.getX(), f.getY()) < 20)
+		if ((ydist < 25) && (xdist < 12 * len))
+			{
+			//score.missedWord();
+			score += f.getWord().length();
+			eaten++;
+			f.resetWord();
+			}
+		}
 	public synchronized void resetPos() {
-		setX(-20);
+		setX(0);
 	}
 
 	public synchronized void resetWord() {
 		resetPos();
+		eaten = 0;
 		word=dict.getNewWord();
 		dropped=false;
 		moveSpeed=(int)(Math.random() * (maxWait-minWait)+minWait); 
