@@ -57,7 +57,7 @@ public class CatchWord extends Thread {
 				else tarY[j] =0;
                	}
             ymax = Collections.max(Arrays.asList(tarY));
-			if (hWord[0].matchWord(target) && hWord[0].getY()>ymax)
+			if (hWord[0].matchWord(target) && hWord[0].getY()>ymax)//if hungry word matches and is lower then catch it
 				{
 				score.caughtWord(hWord[0].getScore());	//score of eaten words is added
 				hWord[0].setHidden(true);	//hide hungry word till it's ready to respawn

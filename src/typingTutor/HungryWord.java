@@ -1,6 +1,7 @@
 package typingTutor;
 
-import java.awt.geom.Point2D;
+//import java.awt.geom.Point2D;
+
 
 public class HungryWord {
 	private String word; // the word
