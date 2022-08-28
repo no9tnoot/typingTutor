@@ -9,6 +9,7 @@ public class HungryWord {
 	private int y; // postion - height
 	private int maxX; //maximum height
 	private boolean dropped; //flag for if user does not manage to catch word in time
+	private boolean hidden; //for when hungry word is waiting to respawn
 	
 	private int moveSpeed; //how fast this word is
 	private static int maxWait=1000;
@@ -21,12 +22,13 @@ public class HungryWord {
 	
 	HungryWord() { //constructor with defaults
 		word="computer"; // a default - not used
-		x=0;
+		x=25;
 		y=150;	
 		maxX=990;
 		dropped=false;
 		moveSpeed=(int)(Math.random() * (maxWait-minWait)+minWait);
 		len = word.length(); 
+		hidden = false;
 	}
 	
 	HungryWord(String text) { 
@@ -99,14 +101,49 @@ public class HungryWord {
 		return score;
 		}
 
-	public synchronized void eat(FallingWord f)
+	public synchronized boolean getHidden()
 		{
-		//System.out.println("trying to eat " + f.getWord());
-		int ydist = Math.abs(y-f.getY());
-		int xdist = Math.abs(x-f.getX());
+		return hidden;
+		}
+
+	public synchronized void setHidden(boolean b)
+		{
+		hidden = b;
+		}
+
+	public synchronized void eat(FallingWord f)//eat fallingword if in range
+		{
+		boolean inRange = false;
+		//int ydist = y-f.getY();
+		//int xdist = f.getX() - x;
+
+		if ((x < f.getX()) && (f.getX()-x < 12*len))
+			{
+			if ((y < f.getY()) && (f.getY()-y < 25))
+				{
+				inRange = true;
+				}
+			if ((y > f.getY()) && (y-f.getY() < 25))
+				{
+				inRange = true;
+				}
+			}
+
+		if ((x > f.getX()) && (x-f.getX() < 12*f.getWord().length()))
+			{
+			if ((y < f.getY()) && (f.getY()-y < 25))
+				{
+				inRange = true;
+				}
+			if ((y > f.getY()) && (y-f.getY() < 25))
+				{
+				inRange = true;
+				}
+			}
 
 		//if (Point2D.distance(x, y, f.getX(), f.getY()) < 20)
-		if ((ydist < 25) && (xdist < 12 * len))
+		//if ((ydist < 25) && (xdist < 12 * len) && (ydist >= 0) && (xdist >= 0))
+		if (inRange)
 			{
 			//score.missedWord();
 			score += f.getWord().length();
@@ -115,10 +152,10 @@ public class HungryWord {
 			}
 		}
 	public synchronized void resetPos() {
-		setX(0);
+		setX(25);
 	}
 
-	public synchronized void resetWord() {
+	public synchronized void resetWord() { //reset hungryword
 		resetPos();
 		eaten = 0;
 		word=dict.getNewWord();

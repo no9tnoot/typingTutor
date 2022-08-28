@@ -39,6 +39,20 @@ public class HungryWordMover extends Thread {
 		while (!done.get()) {				
 			//animate the word
 			while (!myWord.dropped() && !done.get()) {
+
+					if (myWord.getHidden()) //if hidden, hungry word will not move or eat or be drawn for 1-10 seconds
+						{
+						int timer = ThreadLocalRandom.current().nextInt(1000, 10001);
+						//System.out.println("sleeping for " + timer/1000 + " seconds");
+						try {
+							sleep(timer);
+							} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+							};
+						myWord.setHidden(false);
+						}
+
 				    myWord.drop(10);
 					try {
 						sleep(myWord.getSpeed());
@@ -50,21 +64,9 @@ public class HungryWordMover extends Thread {
 			}
 			if (!done.get() && myWord.dropped()) {
 				score.missedWord(myWord.getEaten());
+				myWord.setHidden(true);
 				myWord.resetWord();
-				try {
-					sleep((int) Math.random() * 3000);
-					} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-					};
 			}
-			myWord.resetWord();
-			/*try {
-				//sleep((int) Math.random() * 3000);
-				} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				};*/
 		}
 	}
 	

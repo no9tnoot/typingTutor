@@ -46,10 +46,13 @@ public class GamePanel extends JPanel implements Runnable {
 		    else if (!done.get()) {
 		    	for (int i=0;i<noWords;i++){	
 					g.setColor(Color.black);    	
-		    		g.drawString(words[i].getWord(),words[i].getX()+borderWidth,words[i].getY());
-					g.setColor(Color.green);
-					g.drawString(hWord[0].getWord(), hWord[0].getX()+borderWidth, hWord[0].getY());	
-					hWord[0].eat(words[i]);
+		    		g.drawString(words[i].getWord(),words[i].getX()/*+borderWidth*/,words[i].getY());
+					if (!hWord[0].getHidden())  //if hungry word is not hidden, draw it and eat any words it collides with
+						{
+						g.setColor(Color.green);
+						g.drawString(hWord[0].getWord(), hWord[0].getX()/*+borderWidth*/, hWord[0].getY());	
+						hWord[0].eat(words[i]);
+						}
 		    	}
 		    	g.setColor(Color.lightGray); //change colour of pen
 		    	g.fillRect(borderWidth,0,width,borderWidth);

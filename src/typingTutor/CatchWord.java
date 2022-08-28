@@ -60,6 +60,7 @@ public class CatchWord extends Thread {
 			if (hWord[0].matchWord(target) && hWord[0].getY()>ymax)
 				{
 				score.caughtWord(hWord[0].getScore());	//score of eaten words is added
+				hWord[0].setHidden(true);	//hide hungry word till it's ready to respawn
 				hWord[0].resetWord();
 				}
 			else

@@ -197,7 +197,10 @@ public class TypingTutorApp {
 	    		wrdShft[i] = new WordMover(words[i],dict,score,startLatch,done,pause);
 	    }
 
+		//initialize placeholder array for hungry word
 		hWord[0] = new HungryWord(dict.getNewWord(),gameWindow.getStartYpos(),xLimit);
+
+		//create thread to move hungry word
 		hwMover[0] = new HungryWordMover(hWord[0],dict,score,startLatch,done,pause);
 
         //word movers waiting on starting line
@@ -255,8 +258,8 @@ public static void main(String[] args) {
 		
 		words = new FallingWord[noWords];  //array for the  current chosen words from dict
 		wrdShft = new WordMover[noWords]; //array for the threads that animate the words
-		hWord = new HungryWord[1];
-		hwMover = new HungryWordMover[1];
+		hWord = new HungryWord[1]; //placeholder array for hungry word
+		hwMover = new HungryWordMover[1]; //placeholder array for hungry word mover
 		
 		CatchWord.setWords(words, hWord);  //class setter - static method
 		CatchWord.setScore(score);  //class setter - static method
